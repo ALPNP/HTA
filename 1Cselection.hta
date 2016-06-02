@@ -1,0 +1,159 @@
+<html>
+<!-- 
+Приложение для открытия баз данных на терминальном сервере Триволи
+Корректно работает с дисплеями следующих разрешений: 
+800x600
+1024x768
+1280x720
+1280x768
+1280x800
+1600x900
+1920x1080
+-->
+<head>
+<hta:application id=hta_id
+applicationName=trivoli_hta
+showInTaskBar=no
+caption=no
+innerBorder=no
+selection=no
+scroll=no
+contextmenu=no 
+border=none
+/>
+<style type="text/css">
+	h2 {
+		font-family: sans-serif;
+	}
+	.default-button {
+		width:auto;
+		height:auto; 
+		font-size:.8em;
+		font-family:sans-serif;
+		background-color: white;
+		border: none;
+		display: block;
+		border: 3px solid #003895;
+		padding: 3px 3px 3px 3px;
+		margin-top: 5px;
+		width: 300px;
+	}
+	.exit {
+		border: 3px solid red;
+		position: absolute;
+		margin: -10px 0px;
+		width:auto;
+		height:auto; 
+		font-size:.8em;
+		font-family:Arial;
+		background-color: white;
+	}
+	.default-button img{
+		width: 25px;
+		vertical-align:middle;
+		float: left;
+	}
+</style>
+<script language=javascript>
+var winWidth=700; // ширина окна
+// При изменении количества кнопок выбора баз данных, изменить winHeight
+var winHeight=480; // высота окна
+
+window.resizeTo(winWidth, winHeight);
+function start(app) {
+
+	var shell = new ActiveXObject('WScript.Shell');
+
+	switch (app) {
+		case 'Sres' :	
+			shell.Run("C:\\1cSres.cmd",0,true);
+			break ;
+		case 'TRV' :	
+			shell.Run("C:\\1cTRV.cmd",0,true);
+			break ;
+		case 'KuhTRV' :
+			shell.Run("C:\\1cKuhTRV.cmd",0,true);
+			break ;
+		case 'DLT' :	
+			shell.Run("C:\\1cDLT.cmd",0,true);
+			break ;
+		case 'OOOTRV' :
+			shell.Run("C:\\1cOOOTRV.cmd",0,true);
+			break;
+		case 'EXT' :
+			shell.Run("C:\\1cEXT.cmd",0,true);
+			break;
+		// Если нет нужного файла, на экране появится ошибка
+		default: alert("Выбранная база данных отсутствует на сервере, обратитесь в ИТ отдел.");
+	}
+};
+
+// Таймер, принимает текущий this объекта, на котором был клик.
+function timer(target) {
+	target.disabled = true;
+	setTimeout(function(){
+		target.disabled = false;
+	// Ниже устанавливаем таймер, 1 секудна = 1000 мс
+	}, 15000);
+};
+
+// настройка окна
+var winPosX;
+var winPosY;
+// если разрешение дисплея 800 пикселей или менее,
+// располагаем окно правильно
+if (screen.width <= 800) {
+	winPosX=screen.width/2-winWidth/2;
+	winPosY=screen.height/20+winHeight/15;
+	window.moveTo(winPosX, winPosY);
+// в других случаях, располагаем стандартно.
+} else {
+	winPosX=screen.width/2-winWidth/2;
+	winPosY=screen.height/8+winHeight/8;
+	window.moveTo(winPosX, winPosY);
+}
+
+start;
+</script>
+</head>
+<body style="border: 10px solid green">
+<div style="margin:0 auto; text-align:center;">
+<img src="logo.png">
+
+<button onfocus="this.blur();" class="exit" onClick="javascript:start('EXT')">
+	<acronym title="Завершить сеанс">Завершить сеанс</acronym>
+</button>
+
+<h2>Базы данных, доступные для запуска:<h2>
+
+<button class="default-button" onClick="javascript:timer(this);start('Sres');">
+	<acronym title="ООО 'Станкоресурс'">
+		<img src='logo1c.png'>"Станкоресурс"
+	</acronym>
+</button>
+
+<button class="default-button" onClick="javascript:timer(this);start('TRV');">
+	<acronym title="Триволи УПП">
+		<img src='logo1c.png'>"Триволи" УПП
+	</acronym>
+</button>
+
+<button class="default-button" onClick="javascript:timer(this);start('KuhTRV');">
+	<acronym title="ООО'Кухни Триволи'">
+		<img src='logo1c.png'>ООО "Кухни Триволи"
+	</acronym>
+</button>
+
+<button class="default-button" onClick="javascript:timer(this);start('DLT');">
+	<acronym title="ООО'Дельта'">
+		<img src='logo1c.png'>ООО "Дельта"
+	</acronym>
+</button>
+
+<button class="default-button" onClick="javascript:timer(this);start('OOOTRV');">
+	<acronym title="ООО'ТРИВОЛИ'">
+		<img src='logo1c.png'>ООО "Триволи"
+	</acronym>
+</button>
+</div>
+</body></html>
